@@ -28,3 +28,410 @@
       --surface: #1D2829;
       --ink: #E8EEEB;
       --muted: #9DB0AD;
+      --line: #33454A;
+      --tile: #5BA896;
+      --tile-ink: #0F1819;
+      --brick: #E07B63;
+      --brick-soft: #3A2620;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-text-size-adjust: 100%;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--brick); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+
+  /* Header */
+  header {
+    background: var(--tile);
+    color: var(--tile-ink);
+    padding: 44px 0 36px;
+  }
+  .date {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0 0 4px;
+    letter-spacing: .08em;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(44px, 14vw, 72px);
+    line-height: 1.1;
+    letter-spacing: .06em;
+    margin: 0 0 14px;
+  }
+  .summary { margin: 0; font-size: 15px; opacity: .92; }
+  .status {
+    margin: 22px 0 0;
+    padding: 10px 14px;
+    background: rgba(255,255,255,.14);
+    border-left: 4px solid var(--tile-ink);
+    font-weight: 500;
+    font-size: 15px;
+  }
+  .status[hidden] { display: none; }
+  .head-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 44px; padding: 8px 18px;
+    font: 500 15px/1.2 var(--sans);
+    text-decoration: none;
+    border: 1.5px solid currentColor;
+    border-radius: 6px;
+    background: transparent; color: inherit;
+    cursor: pointer;
+  }
+  .btn-solid { background: var(--tile-ink); color: var(--tile); border-color: var(--tile-ink); }
+  .btn-map { background: var(--tile); color: var(--tile-ink); border-color: var(--tile); }
+  .btn-ghost { color: var(--tile); border-color: var(--line); }
+  @media (prefers-color-scheme: dark) {
+    .btn-ghost { color: var(--ink); }
+  }
+  .btn:hover { filter: brightness(1.06); }
+
+  /* Sections */
+  main { padding: 36px 0 56px; }
+  h2 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: 26px;
+    margin: 0 0 6px;
+    letter-spacing: .04em;
+  }
+  .lead { margin: 0 0 24px; color: var(--muted); font-size: 15px; }
+
+  /* Timeline */
+  .stops { list-style: none; margin: 0; padding: 0; position: relative; }
+  .stops::before {
+    content: "";
+    position: absolute; left: 61px; top: 12px; bottom: 12px;
+    width: 3px; background: var(--line);
+  }
+  .stop {
+    display: grid;
+    grid-template-columns: 52px 22px 1fr;
+    column-gap: 12px;
+    margin-bottom: 18px;
+    position: relative;
+  }
+  .time {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.3;
+    padding-top: 16px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .time small { display: block; font: 400 12px/1.4 var(--sans); color: var(--muted); }
+  .node {
+    width: 22px; height: 22px; margin-top: 18px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 4px solid var(--tile);
+    position: relative; z-index: 1;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px 18px;
+  }
+  .card h3 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: 21px;
+    margin: 0;
+    line-height: 1.35;
+  }
+  .tag {
+    display: inline-block;
+    margin: 6px 6px 0 0;
+    padding: 0 10px;
+    font-size: 13px;
+    line-height: 24px;
+    border-radius: 12px;
+    background: var(--bg);
+    color: var(--muted);
+  }
+  .tag.meal { background: var(--brick-soft); color: var(--brick); font-weight: 500; }
+  .addr { margin: 12px 0 14px; font-size: 15px; }
+  .addr dt { color: var(--muted); font-size: 13px; }
+  .addr dd { margin: 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .card .btn { font-size: 14px; }
+  .tip { margin: 14px 0 0; font-size: 14px; color: var(--muted); }
+  .tip a { color: var(--brick); font-weight: 500; }
+
+  .stop.is-now .node { background: var(--brick); border-color: var(--brick); box-shadow: 0 0 0 5px var(--brick-soft); }
+  .stop.is-now .card { border-color: var(--brick); border-width: 2px; }
+  .stop.is-done { opacity: .6; }
+  .now-badge {
+    display: none;
+    margin-left: 8px;
+    padding: 0 10px;
+    font: 500 13px/24px var(--sans);
+    vertical-align: middle;
+    background: var(--brick); color: #fff; border-radius: 12px;
+  }
+  .stop.is-now .now-badge { display: inline-block; }
+
+  /* Parking */
+  .parking { margin-top: 48px; }
+  .perk {
+    background: var(--brick-soft);
+    border-left: 5px solid var(--brick);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .perk h3 { font-family: var(--serif); font-weight: 900; font-size: 18px; margin: 0 0 4px; }
+  .perk p { margin: 0; font-size: 15px; }
+  .perk .btn { margin-top: 12px; font-size: 14px; color: var(--brick); }
+  .lots { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .lot {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 12px;
+    align-items: start;
+  }
+  .lot h3 { margin: 0; font-size: 16px; font-weight: 700; }
+  .lot .price { grid-row: 1 / span 2; grid-column: 2; text-align: right; font-family: var(--serif); font-weight: 900; font-size: 18px; color: var(--tile); }
+  .lot .price small { display: block; font: 400 12px/1.4 var(--sans); color: var(--muted); }
+  @media (prefers-color-scheme: dark) { .lot .price { color: var(--ink); } }
+  .lot p { margin: 0; font-size: 14px; color: var(--muted); }
+  .lot .btn { grid-column: 1 / -1; margin-top: 10px; justify-self: start; font-size: 14px; }
+  .note { margin-top: 16px; font-size: 13px; color: var(--muted); }
+
+  footer { padding: 0 0 40px; font-size: 13px; color: var(--muted); }
+
+  @media (max-width: 380px) {
+    .stops::before { left: 51px; }
+    .stop { grid-template-columns: 44px 22px 1fr; column-gap: 8px; }
+    .time { font-size: 15px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="date">10/25 科內出遊</p>
+    <h1>鹿港老街</h1>
+    <p class="summary">共 4 站,10:00 出發,約 13:30 結束。<br>第一站到午餐地點開車約 6 分鐘、1.4 公里。</p>
+    <p class="status" id="status" hidden></p>
+    <div class="head-actions">
+      <a class="btn btn-solid" href="https://maps.app.goo.gl/X6hUtpUNnLj14uVY7" target="_blank" rel="noopener">開啟整段路線地圖</a>
+      <a class="btn" href="#parking">看停車資訊</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <h2>今日行程</h2>
+  <p class="lead">點「開啟地圖」會跳到 Google 地圖導航。點地址旁的按鈕可複製地址。</p>
+
+  <ol class="stops" id="stops">
+
+    <li class="stop" data-start="10:00" data-end="10:30">
+      <div class="time">10:00<small>30 分鐘</small></div>
+      <div class="node" aria-hidden="true"></div>
+      <div class="card">
+        <h3>桂花巷藝術村<span class="now-badge">進行中</span></h3>
+        <dl class="addr">
+          <dt>地址</dt>
+          <dd data-copy>彰化縣鹿港鎮桂花巷 505 號</dd>
+        </dl>
+        <div class="actions">
+          <a class="btn btn-map" href="https://maps.app.goo.gl/BBXppxoxvyj2sZFr7" target="_blank" rel="noopener">開啟地圖</a>
+          <button class="btn btn-ghost" type="button" data-copy-btn>複製地址</button>
+        </div>
+      </div>
+    </li>
+
+    <li class="stop" data-start="10:30" data-end="11:00">
+      <div class="time">10:30<small>30 分鐘</small></div>
+      <div class="node" aria-hidden="true"></div>
+      <div class="card">
+        <h3>鹿港老街<span class="now-badge">進行中</span></h3>
+        <dl class="addr">
+          <dt>地址</dt>
+          <dd data-copy>彰化縣鹿港鎮瑤林街</dd>
+        </dl>
+        <div class="actions">
+          <a class="btn btn-map" href="https://maps.app.goo.gl/arv77mQBxdZepyJg8" target="_blank" rel="noopener">開啟地圖</a>
+          <button class="btn btn-ghost" type="button" data-copy-btn>複製地址</button>
+        </div>
+      </div>
+    </li>
+
+    <li class="stop" data-start="11:00" data-end="11:30">
+      <div class="time">11:00<small>30 分鐘</small></div>
+      <div class="node" aria-hidden="true"></div>
+      <div class="card">
+        <h3>半邊井<span class="now-badge">進行中</span></h3>
+        <dl class="addr">
+          <dt>地址</dt>
+          <dd data-copy>彰化縣鹿港鎮瑤林街 12 號</dd>
+        </dl>
+        <div class="actions">
+          <a class="btn btn-map" href="https://maps.app.goo.gl/j2zw7YGTZGuCWTNV8" target="_blank" rel="noopener">開啟地圖</a>
+          <button class="btn btn-ghost" type="button" data-copy-btn>複製地址</button>
+        </div>
+      </div>
+    </li>
+
+    <li class="stop" data-start="11:30" data-end="13:30">
+      <div class="time">11:30<small>2 小時</small></div>
+      <div class="node" aria-hidden="true"></div>
+      <div class="card">
+        <h3>茶六燒肉堂 鹿港店<span class="now-badge">進行中</span></h3>
+        <span class="tag meal">午餐</span>
+        <dl class="addr">
+          <dt>地址</dt>
+          <dd data-copy>彰化縣鹿港鎮永安里中正路 306 號</dd>
+        </dl>
+        <div class="actions">
+          <a class="btn btn-map" href="https://maps.app.goo.gl/E5NkxDn6qjbKmKeD8" target="_blank" rel="noopener">開啟地圖</a>
+          <button class="btn btn-ghost" type="button" data-copy-btn>複製地址</button>
+        </div>
+        <p class="tip">開車的人,店內消費可折抵停車費,詳見<a href="#parking">停車資訊</a>。</p>
+      </div>
+    </li>
+
+  </ol>
+
+  <section class="parking" id="parking" aria-labelledby="parking-title">
+    <h2 id="parking-title">茶六燒肉堂附近停車</h2>
+    <p class="lead">建議先停特約停車場,有消費發票可折抵。額滿時再選付費停車場。</p>
+
+    <div class="perk">
+      <h3>特約停車場</h3>
+      <p>永安三路、鹿東路 99 巷交叉口</p>
+      <p>憑店內消費發票,最高折抵 3 小時。</p>
+      <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B0%B8%E5%AE%89%E4%B8%89%E8%B7%AF%E9%B9%BF%E6%9D%B1%E8%B7%AF99%E5%B7%B7%E4%BA%A4%E5%8F%89%E5%8F%A3%20%E5%BD%B0%E5%8C%96%E9%B9%BF%E6%B8%AF" target="_blank" rel="noopener">搜尋位置</a>
+    </div>
+
+    <ul class="lots">
+      <li class="lot">
+        <h3>城市車旅 東興站</h3>
+        <p>東興路 222 號,步行約 2 分鐘</p>
+        <div class="price">30 元<small>每半小時</small></div>
+        <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%BD%B0%E5%8C%96%E7%B8%A3%E9%B9%BF%E6%B8%AF%E9%8E%AE%E6%9D%B1%E8%88%88%E8%B7%AF222%E8%99%9F" target="_blank" rel="noopener">搜尋位置</a>
+      </li>
+      <li class="lot">
+        <h3>大盤大停車場</h3>
+        <p>鹿和路一段 54 號,步行約 4 分鐘</p>
+        <div class="price">30 元<small>每小時</small></div>
+        <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%BD%B0%E5%8C%96%E7%B8%A3%E9%B9%BF%E6%B8%AF%E9%8E%AE%E9%B9%BF%E5%92%8C%E8%B7%AF%E4%B8%80%E6%AE%B554%E8%99%9F" target="_blank" rel="noopener">搜尋位置</a>
+      </li>
+      <li class="lot">
+        <h3>城市車旅 路加分院停車場</h3>
+        <p>永安二路 37 號,步行約 6 分鐘</p>
+        <div class="price">20 元<small>每小時</small></div>
+        <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%BD%B0%E5%8C%96%E7%B8%A3%E9%B9%BF%E6%B8%AF%E9%8E%AE%E6%B0%B8%E5%AE%89%E4%BA%8C%E8%B7%AF37%E8%99%9F" target="_blank" rel="noopener">搜尋位置</a>
+      </li>
+    </ul>
+    <p class="note">收費以現場公告為準。</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">行程時間為預定,現場可依狀況調整。</div>
+</footer>
+
+<script>
+(function () {
+  // 出遊日期:若要修改日期,只需改這一行 (年-月-日)
+  var TRIP_DATE = "2026-10-25";
+
+  /* ---------- 複製地址 ---------- */
+  document.querySelectorAll("[data-copy-btn]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var text = btn.closest(".card").querySelector("[data-copy]").textContent.trim();
+      var done = function () {
+        var old = btn.textContent;
+        btn.textContent = "已複製";
+        setTimeout(function () { btn.textContent = old; }, 1800);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+      function fallback() {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+    });
+  });
+
+  /* ---------- 依台灣時間標示目前行程 ---------- */
+  function taipeiNow() {
+    var parts = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Taipei", hour12: false,
+      year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit"
+    }).formatToParts(new Date());
+    var o = {};
+    parts.forEach(function (p) { o[p.type] = p.value; });
+    var h = parseInt(o.hour, 10) % 24;
+    return { date: o.year + "-" + o.month + "-" + o.day, minutes: h * 60 + parseInt(o.minute, 10) };
+  }
+  function toMin(s) { var a = s.split(":"); return parseInt(a[0], 10) * 60 + parseInt(a[1], 10); }
+  function dayNum(s) { var a = s.split("-"); return Date.UTC(+a[0], +a[1] - 1, +a[2]) / 86400000; }
+
+  var statusEl = document.getElementById("status");
+  var stops = Array.prototype.slice.call(document.querySelectorAll(".stop"));
+  var now = taipeiNow();
+  var diff = dayNum(TRIP_DATE) - dayNum(now.date);
+
+  function show(msg) { statusEl.textContent = msg; statusEl.hidden = false; }
+
+  if (diff > 1) {
+    show("距離出遊還有 " + diff + " 天");
+  } else if (diff === 1) {
+    show("明天出發,10:00 第一站桂花巷藝術村");
+  } else if (diff === 0) {
+    var first = toMin(stops[0].dataset.start);
+    var last = toMin(stops[stops.length - 1].dataset.end);
+    if (now.minutes < first) {
+      show("今天出遊,10:00 第一站桂花巷藝術村");
+    } else if (now.minutes >= last) {
+      show("今天的行程已結束,路上小心");
+    } else {
+      var current = null;
+      stops.forEach(function (li) {
+        var s = toMin(li.dataset.start), e = toMin(li.dataset.end);
+        if (now.minutes >= e) li.classList.add("is-done");
+        else if (now.minutes >= s) { li.classList.add("is-now"); current = li; }
+      });
+      if (current) show("目前行程:" + current.querySelector("h3").firstChild.textContent);
+    }
+  } else {
+    show("這次出遊已結束");
+  }
+})();
+</script>
+</body>
+</html>
