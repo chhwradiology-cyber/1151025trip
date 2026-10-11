@@ -199,7 +199,7 @@
     padding: 16px 18px;
     margin-bottom: 14px;
   }
-  .perk h3 { font-family: var(--serif); font-weight: 900; font-size: 18px; margin: 0 0 4px; }
+  .perk h4 { font-family: var(--serif); font-weight: 900; font-size: 18px; margin: 0 0 4px; }
   .perk p { margin: 0; font-size: 15px; }
   .perk .btn { margin-top: 12px; font-size: 14px; color: var(--brick); }
   .lots { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
@@ -213,13 +213,27 @@
     gap: 2px 12px;
     align-items: start;
   }
-  .lot h3 { margin: 0; font-size: 16px; font-weight: 700; }
+  .lot h4 { margin: 0; font-size: 16px; font-weight: 700; }
   .lot .price { grid-row: 1 / span 2; grid-column: 2; text-align: right; font-family: var(--serif); font-weight: 900; font-size: 18px; color: var(--tile); }
   .lot .price small { display: block; font: 400 12px/1.4 var(--sans); color: var(--muted); }
   @media (prefers-color-scheme: dark) { .lot .price { color: var(--ink); } }
   .lot p { margin: 0; font-size: 14px; color: var(--muted); }
   .lot .btn { grid-column: 1 / -1; margin-top: 10px; justify-self: start; font-size: 14px; }
   .note { margin-top: 16px; font-size: 13px; color: var(--muted); }
+
+
+  .area {
+    font-family: var(--serif); font-weight: 900; font-size: 20px;
+    margin: 36px 0 4px; padding-left: 12px;
+    border-left: 5px solid var(--tile);
+    line-height: 1.4;
+  }
+  .parking > .lead + .area { margin-top: 8px; }
+  .area + .lead { margin-bottom: 14px; }
+  .lots + .lots-title { margin-top: 22px; }
+  .lots-title { font-size: 15px; font-weight: 700; margin: 0 0 10px; color: var(--muted); }
+  .lot .price.free { color: var(--brick); }
+  .lot p + p { margin-top: 2px; }
 
   footer { padding: 0 0 40px; font-size: 13px; color: var(--muted); }
 
@@ -265,6 +279,7 @@
           <a class="btn btn-map" href="https://maps.app.goo.gl/BBXppxoxvyj2sZFr7" target="_blank" rel="noopener">開啟地圖</a>
           <button class="btn btn-ghost" type="button" data-copy-btn>複製地址</button>
         </div>
+        <p class="tip">附近停車場,詳見<a href="#parking-old">停車資訊</a>。</p>
       </div>
     </li>
 
@@ -314,18 +329,91 @@
           <a class="btn btn-map" href="https://maps.app.goo.gl/E5NkxDn6qjbKmKeD8" target="_blank" rel="noopener">開啟地圖</a>
           <button class="btn btn-ghost" type="button" data-copy-btn>複製地址</button>
         </div>
-        <p class="tip">開車的人,店內消費可折抵停車費,詳見<a href="#parking">停車資訊</a>。</p>
+        <p class="tip">店內消費於特約停車場可折抵停車費,詳見<a href="#parking-lunch">停車資訊</a>。</p>
       </div>
     </li>
 
   </ol>
 
   <section class="parking" id="parking" aria-labelledby="parking-title">
-    <h2 id="parking-title">茶六燒肉堂附近停車</h2>
+    <h2 id="parking-title">停車資訊</h2>
+    <p class="lead">行程分兩個區域,停車場也分開整理。收費僅供參考,以現場公告為準。</p>
+    <div class="head-actions">
+      <a class="btn btn-ghost" href="#parking-old">鹿港老街附近</a>
+      <a class="btn btn-ghost" href="#parking-lunch">茶六燒肉堂附近</a>
+    </div>
+
+    <h3 class="area" id="parking-old">鹿港老街附近</h3>
+    <p class="lead">桂花巷藝術村、鹿港老街、半邊井,都在這一區步行範圍內。標示「無現金繳費」的停車場,請準備信用卡或電子支付。</p>
+    <ul class="lots">
+      <li class="lot">
+        <h4>鹿津停車場</h4>
+        <p>當日最高 350 元</p>
+        <div class="price">40 元<small>每半小時</small></div>
+        <a class="btn btn-ghost" href="https://maps.app.goo.gl/UQQHZUUXvLeoz6em8" target="_blank" rel="noopener">開啟地圖</a>
+      </li>
+      <li class="lot">
+        <h4>City parking 城市車旅 公園站</h4>
+        <p>無現金繳費</p>
+        <div class="price">80 元<small>每小時</small></div>
+        <a class="btn btn-ghost" href="https://maps.app.goo.gl/dsTu71NWxpzhqUcL7" target="_blank" rel="noopener">開啟地圖</a>
+      </li>
+      <li class="lot">
+        <h4>Times 親民路第 3 停車場</h4>
+        <p>無最高收費優惠</p>
+        <p>無現金繳費</p>
+        <div class="price">50 元<small>每半小時</small></div>
+        <a class="btn btn-ghost" href="https://maps.app.goo.gl/VkWFytzYwECSvtWx6" target="_blank" rel="noopener">開啟地圖</a>
+      </li>
+      <li class="lot">
+        <h4>Times 親民路停車場</h4>
+        <p>無最高收費優惠</p>
+        <p>無現金繳費</p>
+        <div class="price">30 元<small>每半小時</small></div>
+        <a class="btn btn-ghost" href="https://maps.app.goo.gl/YLpYuSVYiJoQek2U6" target="_blank" rel="noopener">開啟地圖</a>
+      </li>
+      <li class="lot">
+        <h4>City parking 城市車旅 公所站</h4>
+        <p>前 30 分鐘免費</p>
+        <div class="price">40 元<small>每小時</small></div>
+        <a class="btn btn-ghost" href="https://maps.app.goo.gl/Hxz532WSvjszsd9a7" target="_blank" rel="noopener">開啟地圖</a>
+      </li>
+      <li class="lot">
+        <h4>Times 中山路停車場</h4>
+        <p>無最高收費優惠</p>
+        <p>無現金繳費</p>
+        <div class="price">40 元<small>每半小時</small></div>
+        <a class="btn btn-ghost" href="https://maps.app.goo.gl/QkHoF1192s5muidr5" target="_blank" rel="noopener">開啟地圖</a>
+      </li>
+      <li class="lot">
+        <h4>鹿港天后宮停車場</h4>
+        <p>無當日最高優惠</p>
+        <div class="price">40 元<small>每小時</small></div>
+        <a class="btn btn-ghost" href="https://maps.app.goo.gl/dLzfBU6CaG9A9TPz9" target="_blank" rel="noopener">開啟地圖</a>
+      </li>
+    </ul>
+
+    <p class="lots-title">免費停車場(要多走一段路)</p>
+    <ul class="lots">
+      <li class="lot">
+        <h4>文武廟免費停車場</h4>
+        <p>步行到老街約 16 到 20 分鐘</p>
+        <div class="price free">免費<small></small></div>
+        <a class="btn btn-ghost" href="https://maps.app.goo.gl/ioXJTFbfpvufAvxJ8" target="_blank" rel="noopener">開啟地圖</a>
+      </li>
+      <li class="lot">
+        <h4>鹿港鎮停三停車場</h4>
+        <p>步行到老街約 16 到 20 分鐘</p>
+        <div class="price free">免費<small></small></div>
+        <a class="btn btn-ghost" href="https://maps.app.goo.gl/QMTw5Z3qjmskcw839" target="_blank" rel="noopener">開啟地圖</a>
+      </li>
+    </ul>
+
+    <h3 class="area" id="parking-lunch">茶六燒肉堂附近</h3>
     <p class="lead">建議先停特約停車場,有消費發票可折抵。額滿時再選付費停車場。</p>
 
     <div class="perk">
-      <h3>特約停車場</h3>
+      <h4>特約停車場</h4>
       <p>永安三路、鹿東路 99 巷交叉口</p>
       <p>憑店內消費發票,最高折抵 3 小時。</p>
       <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B0%B8%E5%AE%89%E4%B8%89%E8%B7%AF%E9%B9%BF%E6%9D%B1%E8%B7%AF99%E5%B7%B7%E4%BA%A4%E5%8F%89%E5%8F%A3%20%E5%BD%B0%E5%8C%96%E9%B9%BF%E6%B8%AF" target="_blank" rel="noopener">搜尋位置</a>
@@ -333,25 +421,24 @@
 
     <ul class="lots">
       <li class="lot">
-        <h3>城市車旅 東興站</h3>
+        <h4>城市車旅 東興站</h4>
         <p>東興路 222 號,步行約 2 分鐘</p>
         <div class="price">30 元<small>每半小時</small></div>
         <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%BD%B0%E5%8C%96%E7%B8%A3%E9%B9%BF%E6%B8%AF%E9%8E%AE%E6%9D%B1%E8%88%88%E8%B7%AF222%E8%99%9F" target="_blank" rel="noopener">搜尋位置</a>
       </li>
       <li class="lot">
-        <h3>大盤大停車場</h3>
+        <h4>大盤大停車場</h4>
         <p>鹿和路一段 54 號,步行約 4 分鐘</p>
         <div class="price">30 元<small>每小時</small></div>
         <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%BD%B0%E5%8C%96%E7%B8%A3%E9%B9%BF%E6%B8%AF%E9%8E%AE%E9%B9%BF%E5%92%8C%E8%B7%AF%E4%B8%80%E6%AE%B554%E8%99%9F" target="_blank" rel="noopener">搜尋位置</a>
       </li>
       <li class="lot">
-        <h3>城市車旅 路加分院停車場</h3>
+        <h4>城市車旅 路加分院停車場</h4>
         <p>永安二路 37 號,步行約 6 分鐘</p>
         <div class="price">20 元<small>每小時</small></div>
         <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%BD%B0%E5%8C%96%E7%B8%A3%E9%B9%BF%E6%B8%AF%E9%8E%AE%E6%B0%B8%E5%AE%89%E4%BA%8C%E8%B7%AF37%E8%99%9F" target="_blank" rel="noopener">搜尋位置</a>
       </li>
     </ul>
-    <p class="note">收費以現場公告為準。</p>
   </section>
 </main>
 
